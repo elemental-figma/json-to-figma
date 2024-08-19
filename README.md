@@ -3,6 +3,14 @@ JSON to Figma import plugin
 
 [Work in progress.]
 
+## Automated Releases
+
+Local authentication:
+
+```sh
+npx figcd auth
+```
+
 ## Quickstart
 
 - Run `npm install` to install dependencies.
