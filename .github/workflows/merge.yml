@@ -1,9 +1,11 @@
 name: Merge
 
 on:
-  push:
+  pull_request:
+    types:
+      - closed
     branches:
-      - main
+      - main  # Only trigger on merges to the main branch
 
 env:
   FIGMA_WEB_AUTHN_TOKEN: ${{ secrets.FIGMA_WEB_AUTHN_TOKEN }}
@@ -25,14 +27,17 @@ jobs:
           node-version: 18
           cache: 'npm'
       - name: Get next Figma release version
+        if: github.event.pull_request.merged && contains(github.event.pull_request.title, 'Update Changelog')
         id: get-figma-release-version
         run: |
           echo "PR_VERSION=$(node -p "require('./package.json').figma.version")" >> "$GITHUB_OUTPUT"
       - name: Get currently published version
+        if: github.event.pull_request.merged && contains(github.event.pull_request.title, 'Update Changelog')
         id: get-published-version
         run: |
           echo "CURRENT_VERSION=$(npx figcd current-version | sed 's/[^0-9]*\([0-9]*$\)/\1/' | grep -o '[0-9]\+')" >> "$GITHUB_OUTPUT"
       - name: Version comparison for conditional release
+        if: github.event.pull_request.merged && contains(github.event.pull_request.title, 'Update Changelog')
         id: version_check
         env:
           PR_VERSION: ${{ steps.get-figma-release-version.outputs.PR_VERSION }}
@@ -44,11 +49,14 @@ jobs:
             echo "versions_differ=false" >> "$GITHUB_ENV"
             exit 0
           fi
-      - name: Download artifact from PR
+      - name: Install dependencies
         if: env.versions_differ == 'true'
-        uses: actions/download-artifact@v4
-        with:
-          name: package # Name of the artifact created in the PR workflow
+        run: |
+          npm ci
+      - name: Build plugin
+        if: env.versions_differ == 'true'
+        run: |
+          npm run build
       - name: Publish plugin
         if: env.versions_differ == 'true'
         run: |
