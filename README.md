@@ -1,5 +1,5 @@
 # json-to-figma
-JSON to Figma import plugin
+JSON to Figma import plugin.
 
 [Work in progress.]
 
