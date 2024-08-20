@@ -60,7 +60,7 @@ jobs:
       - name: Publish plugin
         if: env.versions_differ == 'true'
         run: |
-          ls dist
+          npx figcd release -rn 'ui improvements'
       # - name: Set next Figma version as Figma version in package.json
       #   run: |
       #     node scripts/prepare.js
