@@ -45,10 +45,12 @@ jobs:
             exit 0
           fi
       - name: Download artifact from PR
+        if: env.versions_differ == 'true'
         uses: actions/download-artifact@v3
         with:
           name: package # Name of the artifact created in the PR workflow
       - name: Publish plugin
+        if: env.versions_differ == 'true'
         run: |
           ls dist
       # - name: Set next Figma version as Figma version in package.json
