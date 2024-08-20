@@ -22,16 +22,18 @@ jobs:
           node-version: 18
           cache: 'npm'
       - name: Get next Figma release version
+        id: get-figma-release-version
         run: |
           echo "PR_VERSION=$(node -p "require('./package.json').figma.version")" >> "$GITHUB_OUTPUT"
       - name: Get currently published version
+        id: get-published-version
         run: |
           echo "CURRENT_VERSION=$(npx figcd current-version | sed 's/[^0-9]*\([0-9]*$\)/\1/' | grep -o '[0-9]\+')" >> "$GITHUB_OUTPUT"
       - name: Version comparison for conditional release
         id: version_check
         env:
-          PR_VERSION: ${{ steps.color-selector.outputs.PR_VERSION }}
-          CURRENT_VERSION: ${{ steps.color-selector.outputs.CURRENT_VERSION }}
+          PR_VERSION: ${{ steps.get-figma-release-version.outputs.PR_VERSION }}
+          CURRENT_VERSION: ${{ steps.get-published-version.outputs.CURRENT_VERSION }}
         run: |
           if [ "$((10#$PR_VERSION))" -gt "$((10#$CURRENT_VERSION))" ]; then
             echo "versions_differ=true" >> "$GITHUB_ENV"
