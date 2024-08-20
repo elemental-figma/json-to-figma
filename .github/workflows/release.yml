@@ -7,6 +7,11 @@ on:
 env:
   FIGMA_WEB_AUTHN_TOKEN: ${{ secrets.FIGMA_WEB_AUTHN_TOKEN }}
 
+permissions:
+    contents: write
+    id-token: write
+    pull-requests: write
+
 jobs:
   release:
     environment: PRODUCTION
