@@ -46,5 +46,8 @@
       "prettier --write",
       "git add"
     ]
+  },
+  "figma": {
+    "version": "6"
   }
 }

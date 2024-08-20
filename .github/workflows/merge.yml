@@ -1,0 +1,48 @@
+name: Merge
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: write
+
+jobs:
+  publish:
+    environment: PRODUCTION
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+      - name: Get next Figma release version
+        run: |
+          echo "PR_VERSION=$(node -p "require('./package.json').figma.version")" >> "$GITHUB_OUTPUT"
+      - name: Get currently published version
+        run: |
+          echo "CURRENT_VERSION=$(npx figcd current-version | sed 's/[^0-9]*\([0-9]*$\)/\1/' | grep -o '[0-9]\+')" >> "$GITHUB_OUTPUT"
+      - name: Version comparison for conditional release
+        id: version_check
+        run: |
+          if [ "$((10#$PR_VERSION))" -gt "$((10#$CURRENT_VERSION))" ]; then
+            echo "versions_differ=true" >> "$GITHUB_ENV"
+          else
+            echo "versions_differ=false" >> "$GITHUB_ENV"
+            exit 0
+          fi
+      - name: Download artifact from PR
+        uses: actions/download-artifact@v3
+        with:
+          name: package # Name of the artifact created in the PR workflow
+      - name: Publish plugin
+        run: |
+          ls dist
+      # - name: Set next Figma version as Figma version in package.json
+      #   run: |
+      #     node scripts/prepare.js
