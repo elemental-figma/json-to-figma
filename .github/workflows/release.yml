@@ -13,26 +13,43 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-
+    - name: Checkout
+        uses: actions/checkout@v3
     - name: Use Node.js 18.x
       uses: actions/setup-node@v3
       with:
         node-version: 18
         cache: 'npm'
-    
     - name: Install dependencies
       run: |
         npm install
-
-
     - name: Build plugin
       run: |
         npm run build
-
     - name: Set next Figma version as Figma version in package.json
       run: |
         node scripts/prepare.js
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v6
+      with:
+        commit-message: update changelog
+        title: Update Changelog
+        body: Update changelog to reflect release changes
+        branch: update-changelog
+        base: main
+    - name: Store Artifact
+      id: "store_artifact"
+      uses: actions/upload-artifact@v4
+      with:
+        name: package
+        path: |
+          dist
+          manifest.json
+    # - name: Store Artifact
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: package
+    #     path: dist/bundle.zip
 
     # - name: Publish new Version to Figma
     #   run: |
