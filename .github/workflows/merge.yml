@@ -46,7 +46,7 @@ jobs:
           fi
       - name: Download artifact from PR
         if: env.versions_differ == 'true'
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: package # Name of the artifact created in the PR workflow
       - name: Publish plugin
