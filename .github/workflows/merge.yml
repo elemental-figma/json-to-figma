@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+env:
+  FIGMA_WEB_AUTHN_TOKEN: ${{ secrets.FIGMA_WEB_AUTHN_TOKEN }}
+
 permissions:
   id-token: write
   contents: write
