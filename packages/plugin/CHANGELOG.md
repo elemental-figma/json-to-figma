@@ -1,5 +1,11 @@
 # @elemental-figma/json-to-figma
 
+## 0.0.5
+
+### Patch Changes
+
+- 2b4f001: fix changeset publish script
+
 ## 0.0.4
 
 ### Patch Changes
