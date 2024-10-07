@@ -8,6 +8,7 @@
   "main": "webpack.config.js",
   "scripts": {
     "release": "node scripts/publish.mjs",
+    "publish": "changeset tag && npm run release",
     "build": "webpack --mode=production",
     "build:watch": "webpack --mode=development --watch",
     "dev": "npm run build:watch",
