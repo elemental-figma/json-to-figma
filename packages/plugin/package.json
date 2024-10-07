@@ -1,6 +1,9 @@
 {
   "name": "@elemental-figma/json-to-figma",
   "version": "1.0.0",
+  "figma": {
+    "version": "7"
+  },
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
@@ -10,6 +13,34 @@
     "dev": "npm run build:watch",
     "prettier:format": "prettier --write '**/*.{js,jsx,ts,tsx,css,json}' ",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@changesets/cli": "^2.27.9",
+    "@elemental-figma/object-bridge": "^0.0.1-beta.1",
+    "@react-platform/figma": "^0.0.2-beta.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@figma/plugin-typings": "^1.84.0",
+    "@figma/widget-typings": "^1.9.1",
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "commander": "^12.1.0",
+    "css-loader": "^6.7.1",
+    "figcd": "^0.0.16",
+    "html-webpack-plugin": "^5.5.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1",
+    "react-dev-utils": "^12.0.1",
+    "style-loader": "^3.3.1",
+    "ts-loader": "^9.3.1",
+    "tsx": "^4.7.0",
+    "typescript": "^4.7.4",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
   },
   "keywords": [],
   "author": "",
