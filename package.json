@@ -1,8 +1,11 @@
 {
-  "name": "@elemental-figma/json-to-figma",
+  "private": true,
   "version": "0.0.2",
   "description": "This plugin template uses Typescript. If you are familiar with Javascript, Typescript will look very familiar. In fact, valid Javascript code is already valid Typescript code.",
   "license": "MIT",
+  "workspaces": [
+    "packages/plugin"
+  ],
   "scripts": {
     "build": "webpack --mode=production",
     "build:watch": "webpack --mode=development --watch",
@@ -10,6 +13,7 @@
     "prettier:format": "prettier --write '**/*.{js,jsx,ts,tsx,css,json}' "
   },
   "dependencies": {
+    "@changesets/cli": "^2.27.9",
     "@elemental-figma/object-bridge": "^0.0.1-beta.1",
     "@react-platform/figma": "^0.0.2-beta.4",
     "react": "^18.2.0",

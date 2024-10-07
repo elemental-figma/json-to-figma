@@ -1,6 +1,6 @@
-const fs = require('fs');
+import fs from 'fs';
 
-const { getPluginInfo } = require('figcd/src/figma-helper');
+import { getPluginInfo } from 'figcd/src/figma-helper';
 
 async function updatePackageVersion(packageFile, minorVersion) {
   const packageDataRaw = fs.readFileSync(packageFile, 'utf8');
