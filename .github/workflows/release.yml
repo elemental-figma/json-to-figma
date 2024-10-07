@@ -32,9 +32,6 @@ jobs:
       - name: Build plugin
         run: |
           npm run build
-      - name: Set next Figma version as Figma version in package.json
-        run: |
-          node scripts/prepare.js
       - name: Create Release Pull Request
         uses: changesets/action@v1
         with:
