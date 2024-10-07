@@ -1,5 +1,11 @@
 # @elemental-figma/json-to-figma
 
+## 0.0.6
+
+### Patch Changes
+
+- 290fca1: add publish script
+
 ## 0.0.5
 
 ### Patch Changes
