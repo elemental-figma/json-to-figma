@@ -34,10 +34,12 @@ jobs:
           npm run build
       - name: Create Release Pull Request
         uses: changesets/action@v1
+        with:
+          publish: npx @changesets/cli tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish to Figma
-        if: steps.changesets.outputs.hasChangesets == 'false'
+        if: steps.changesets.outputs.published == 'true'
         # You can do something when a publish happens.
         run: npm run release -- --data "${{ steps.changesets.outputs.publishedPackages }}"
       - name: Store Artifact
