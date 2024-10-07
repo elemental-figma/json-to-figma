@@ -34,9 +34,6 @@ jobs:
           npm run build
       - name: Create Release Pull Request
         uses: changesets/action@v1
-        with:
-          # This expects you to have a script called release which does a build for your packages and calls changeset publish
-          publish: npm run release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish to Figma
