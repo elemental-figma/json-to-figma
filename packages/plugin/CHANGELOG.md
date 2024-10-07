@@ -1,5 +1,11 @@
 # @elemental-figma/json-to-figma
 
+## 0.0.7
+
+### Patch Changes
+
+- 54e4649: fix actions command
+
 ## 0.0.6
 
 ### Patch Changes

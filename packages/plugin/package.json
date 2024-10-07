@@ -1,6 +1,6 @@
 {
   "name": "@elemental-figma/json-to-figma",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "figma": {
     "version": "7"
   },
