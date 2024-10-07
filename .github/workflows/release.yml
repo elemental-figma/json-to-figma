@@ -39,6 +39,10 @@ jobs:
           publish: npm run release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish to Figma
+        if: steps.changesets.outputs.published == 'true'
+        # You can do something when a publish happens.
+        run: npm run release -- --data "${{ steps.changesets.outputs.publishedPackages }}"
       - name: Store Artifact
         id: "store_artifact"
         uses: actions/upload-artifact@v4
