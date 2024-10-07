@@ -7,10 +7,8 @@
     "packages/plugin"
   ],
   "scripts": {
-    "build": "webpack --mode=production",
-    "build:watch": "webpack --mode=development --watch",
-    "dev": "npm run build:watch",
-    "prettier:format": "prettier --write '**/*.{js,jsx,ts,tsx,css,json}' "
+    "build": "npm run build --workspace=plugin",
+    "prettier:format": "npm run prettier:format --workspace=plugin"
   },
   "dependencies": {
     "@changesets/cli": "^2.27.9",

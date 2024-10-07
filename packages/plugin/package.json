@@ -5,6 +5,10 @@
   "main": "webpack.config.js",
   "scripts": {
     "release": "node scripts/prepare.mjs && node scripts/publish.mjs",
+    "build": "webpack --mode=production",
+    "build:watch": "webpack --mode=development --watch",
+    "dev": "npm run build:watch",
+    "prettier:format": "prettier --write '**/*.{js,jsx,ts,tsx,css,json}' ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
