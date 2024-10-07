@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import { getPluginInfo } from 'figcd/src/figma-helper';
+import { getPluginInfo } from 'figcd/src/figma-helper.js';
 
 async function updatePackageVersion(packageFile, minorVersion) {
   const packageDataRaw = fs.readFileSync(packageFile, 'utf8');
