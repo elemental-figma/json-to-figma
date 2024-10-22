@@ -66,9 +66,8 @@ async function main() {
 
   await createZipBundle(true);
 
-  const releaseZip = await readFile(path.join(__dirname, '../dist/release.zip'));
-  const releaseZipSize = (await stat(path.join(__dirname, '../dist/release.zip'))).size;
-  
+  const releaseZip = await readFile(path.join(__dirname, '../dist/release.zip'), 'binary');
+  // const releaseZipSize = (await stat(path.join(__dirname, '../dist/release.zip'))).size;
 
   const uploadReleaseAssetRes = await octokit.rest.repos.uploadReleaseAsset({
     owner,
@@ -76,10 +75,6 @@ async function main() {
     url: release.data.upload_url,
     release_id: release.data.id,
     data: releaseZip,
-    headers: {
-      'content-type': 'application/zip',
-      'content-length': releaseZipSize,
-    },
     name: 'release.zip',
   });
 
