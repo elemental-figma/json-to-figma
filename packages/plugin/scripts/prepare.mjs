@@ -1,5 +1,5 @@
 import fs from 'fs';
-import Octokit from '@octokit/rest';
+// import Octokit from '@octokit/rest';
 import figmaHelper from 'figcd/src/figma-helper.js';
 
 
@@ -29,52 +29,52 @@ interface File {
 }
 */
 
-const pushFilesToGitHub = async (owner, repo, branchName, files, commitMessage) => {
-  const client = new Octokit({
-    auth: process.env.GITHUB_TOKEN,
-  });
+// const pushFilesToGitHub = async (owner, repo, branchName, files, commitMessage) => {
+//   const client = new Octokit({
+//     auth: process.env.GITHUB_TOKEN,
+//   });
 
-  const commits = await client.repos.listCommits({
-    owner: owner,
-    repo: repo,
-  });
-  const commitSHA = commits.data[0].sha;
-  const commitableFiles/*: File[]*/ = files.map(({name, contents}) => {
-    return {
-      path: name,
-      mode: '100644',
-      type: 'commit',
-      content: contents
-    }
-  });
-  const {
-    data: { sha: currentTreeSHA },
-  } = await client.git.createTree({
-    owner: owner,
-    repo: repo,
-    tree: commitableFiles,
-    base_tree: commitSHA,
-    message: 'Updated programatically with Octokit',
-    parents: [commitSHA],
-  });
+//   const commits = await client.repos.listCommits({
+//     owner: owner,
+//     repo: repo,
+//   });
+//   const commitSHA = commits.data[0].sha;
+//   const commitableFiles/*: File[]*/ = files.map(({name, contents}) => {
+//     return {
+//       path: name,
+//       mode: '100644',
+//       type: 'commit',
+//       content: contents
+//     }
+//   });
+//   const {
+//     data: { sha: currentTreeSHA },
+//   } = await client.git.createTree({
+//     owner: owner,
+//     repo: repo,
+//     tree: commitableFiles,
+//     base_tree: commitSHA,
+//     message: 'Updated programatically with Octokit',
+//     parents: [commitSHA],
+//   });
 
-  const {
-    data: { sha: newCommitSHA },
-  } = await client.git.createCommit({
-    owner: owner,
-    repo: repo,
-    tree: currentTreeSHA,
-    message: commitMessage,
-    parents: [latestCommitSHA],
-  });
+//   const {
+//     data: { sha: newCommitSHA },
+//   } = await client.git.createCommit({
+//     owner: owner,
+//     repo: repo,
+//     tree: currentTreeSHA,
+//     message: commitMessage,
+//     parents: [latestCommitSHA],
+//   });
 
-  await client.git.updateRef({
-    owner: owner,
-    repo: repo,
-    sha: newCommitSHA,
-    ref: `heads/${branchName}`,
-  });
-};
+//   await client.git.updateRef({
+//     owner: owner,
+//     repo: repo,
+//     sha: newCommitSHA,
+//     ref: `heads/${branchName}`,
+//   });
+// };
 
 async function main() {
   const packageFile = './package.json';
