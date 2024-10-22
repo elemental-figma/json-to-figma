@@ -1,5 +1,11 @@
 # @elemental-figma/json-to-figma
 
+## 0.0.9
+
+### Patch Changes
+
+- 599d08f: test
+
 ## 0.0.8
 
 ### Patch Changes
