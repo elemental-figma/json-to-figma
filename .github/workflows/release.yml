@@ -41,6 +41,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish Figma plugin
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run release
       - name: Prepare Figma release
         if: steps.changesets.outputs.pullRequestNumber != ''
