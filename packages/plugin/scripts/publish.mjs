@@ -73,22 +73,33 @@ async function main() {
   // localAssetStream.push(null);
   // const releaseZipSize = (await stat(path.join(__dirname, '../dist/release.zip'))).size;
 
-  const uploadReleaseAssetRes = await octokit.rest.repos.uploadReleaseAsset({
-    owner,
-    repo,
-    // url: release.data.upload_url,
-    release_id: release.data.id,
+  const uploadReleaseAssetRes = await octokit.request({
+    method: "POST",
+    url: release.data.upload_url,
     headers: {
       'content-type': 'application/zip',
       'content-length': Buffer.byteLength(releaseZip),
     },
-    data: await readFile(path.join(__dirname, '../dist/release.zip')),
-    // headers: {
-    //   'content-type': 'application/octet-stream',
-    //   'content-length': Buffer.byteLength(releaseZip),
-    // },
-    name: 'release.zip',
+    data: releaseZip,
+    name: "release.zip",
+    // label: "test",
   });
+  // const uploadReleaseAssetRes = await octokit.rest.repos.uploadReleaseAsset({
+  //   owner,
+  //   repo,
+  //   // url: release.data.upload_url,
+  //   release_id: release.data.id,
+  //   headers: {
+  //     'content-type': 'application/zip',
+  //     'content-length': Buffer.byteLength(releaseZip),
+  //   },
+  //   data: await readFile(path.join(__dirname, '../dist/release.zip')),
+  //   // headers: {
+  //   //   'content-type': 'application/octet-stream',
+  //   //   'content-length': Buffer.byteLength(releaseZip),
+  //   // },
+  //   name: 'release.zip',
+  // });
 
   console.log(uploadReleaseAssetRes);
 
