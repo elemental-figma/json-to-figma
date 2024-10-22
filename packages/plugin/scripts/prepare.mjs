@@ -78,16 +78,16 @@ const pushFilesToGitHub = async (owner, repo, branchName, files, commitMessage) 
 
 async function main() {
   const packageFile = './package.json';
-  const currentVersionNumber = (await figmaHelper.getPluginInfo('./manifest.json', process.env.FIGMA_WEB_AUTHN_TOKEN)).currentVersionNumber; 
+  const currentVersionNumber = (await figmaHelper.getPluginInfo('./manifest.json', process.env.FIGMA_WEB_AUTHN_TOKEN)).currentVersionNumber;
   await updatePackageVersion(packageFile, currentVersionNumber + 1)
   console.log('Minor Version in '+ packageFile + ' updated to '+ (currentVersionNumber + 1))
 
-  const packageDataString = fs.readFileSync(packageFile, 'utf8');
-  const files = [{
-    name: 'packages/plugin/package.json',
-    contents: packageDataString,
-  }];
-  await pushFileToGitHub('elemental-figma', 'json-to-figma', 'changeset-release/main', files, `Update Figma plugin version`);
+  // const packageDataString = fs.readFileSync(packageFile, 'utf8');
+  // const files = [{
+  //   name: 'packages/plugin/package.json',
+  //   contents: packageDataString,
+  // }];
+  // await pushFileToGitHub('elemental-figma', 'json-to-figma', 'changeset-release/main', files, `Update Figma plugin version`);
 }
 
 main();
