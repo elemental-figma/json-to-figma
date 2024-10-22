@@ -44,34 +44,30 @@ jobs:
         run: npm run bundle
       - name: Store Artifact
         id: "store_artifact"
+        if: steps.changesets.outputs.pullRequestNumber != ''
         uses: actions/upload-artifact@v4
         with:
           name: package
           path: |
             dist
             manifest.json
-      - name: Store Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: package
-          path: dist/bundle.zip
       - name: Find artifact comment
         uses: peter-evans/find-comment@v3
+        if: steps.changesets.outputs.pullRequestNumber != ''
         id: find_artifact_comment
         with:
-          issue-number: ${{ github.event.pull_request.number }}
+          issue-number: ${{ steps.changesets.outputs.pullRequestNumber }}
           comment-author: 'github-actions[bot]'
           body-includes: The artifact was successfully created
       - name: Create or update artifact comment
         uses: peter-evans/create-or-update-comment@v4
+        if: steps.changesets.outputs.pullRequestNumber != ''
         with:
           comment-id: ${{ steps.find_artifact_comment.outputs.comment-id }}
-          issue-number: ${{ github.event.pull_request.number }}
+          issue-number: ${{ steps.changesets.outputs.pullRequestNumber }}
           body: |
             The artifact was successfully created! [Download it here](${{steps.store_artifact.outputs.artifact-url}})
           edit-mode: replace
-      - name: Auto Commit Changes
-        uses: stefanzweifel/git-auto-commit-action@v5
     # - name: Store Artifact
     #   uses: actions/upload-artifact@v4
     #   with:

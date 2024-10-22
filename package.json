@@ -9,7 +9,7 @@
   "scripts": {
     "release": "npm --workspace=@elemental-figma/json-to-figma run release",
     "publish": "npm --workspace=@elemental-figma/json-to-figma run publish",
-    "version": "changesets version && npm --workspace=@elemental-figma/json-to-figma run version",
+    "version123": "changeset version && npm --workspace=@elemental-figma/json-to-figma run version",
     "version:figma": "npm --workspace=@elemental-figma/json-to-figma run version:figma",
     "build": "npm --workspace=@elemental-figma/json-to-figma run build",
     "prettier:format": "npm --workspace=@elemental-figma/json-to-figma run prettier:format"
