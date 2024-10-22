@@ -1,4 +1,4 @@
-import { readFile, writeFile } from 'fs/promises';
+import { readFile, writeFile, stat } from 'fs/promises';
 import path from 'path';
 import { Octokit } from '@octokit/rest';
 
@@ -64,7 +64,8 @@ async function main() {
 
   await createZipBundle(true);
 
-  const releaseZip = await fs.readFileSync(path.join(__dirname, '../dist/release.zip'));
+  const releaseZip = await readFile(path.join(__dirname, '../dist/release.zip'));
+  const releaseZipSize = (await stat(path.join(__dirname, '../dist/release.zip'))).size;
 
   const uploadReleaseAssetRes = await octokit.rest.repos.uploadReleaseAsset({
     owner,
@@ -74,7 +75,7 @@ async function main() {
     data: releaseZip,
     headers: {
       'content-type': contentType,
-      'content-length': fs.statSync(asset).size,
+      'content-length': releaseZipSize,
     },
     name: 'release.zip',
   });
