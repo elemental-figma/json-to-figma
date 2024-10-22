@@ -1,8 +1,8 @@
 {
   "name": "@elemental-figma/json-to-figma",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "figma": {
-    "version": "7"
+    "version": "8"
   },
   "description": "",
   "main": "webpack.config.js",
