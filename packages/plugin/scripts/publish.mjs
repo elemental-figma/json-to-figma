@@ -76,13 +76,13 @@ async function main() {
   const uploadReleaseAssetRes = await octokit.rest.repos.uploadReleaseAsset({
     owner,
     repo,
-    url: release.data.upload_url,
+    // url: release.data.upload_url,
     release_id: release.data.id,
-    data: localAssetStream,
-    headers: {
-      'content-type': 'application/octet-stream',
-      'content-length': Buffer.byteLength(releaseZip),
-    },
+    data: await readFile(path.join(__dirname, '../dist/release.zip')),
+    // headers: {
+    //   'content-type': 'application/octet-stream',
+    //   'content-length': Buffer.byteLength(releaseZip),
+    // },
     name: 'release.zip',
   });
 
