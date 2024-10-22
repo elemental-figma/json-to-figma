@@ -7,6 +7,23 @@ import * as url from 'url';
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
+const parseMedia = (carouselMediaUrls, carouselVideoUrls) => {
+  return {
+    carouselMedia: Object.keys(carouselMediaUrls).length > 0
+      ? Object.keys(carouselMediaUrls).map((index) => ({
+        carousel_position: index,
+        sha1: carouselMediaUrls[index].sha1,
+      }))
+      : undefined,
+    carouselVideos: Object.keys(carouselVideoUrls).length > 0
+      ? Object.keys(carouselVideoUrls).map((index) => ({
+        carousel_position: index,
+        sha1: carouselVideoUrls[index].sha1,
+      }))
+      : undefined,
+  };
+}
+
 
 const authNToken = process.env.FIGMA_WEB_AUTHN_TOKEN;
 // const figmaFile = process.env.FIGMA_TEXT_FILE;
@@ -23,6 +40,7 @@ export async function publishRelease(releaseNotes) {
     const category = currentPluginInfo.category_id;
     const tagline = currentPluginInfo.currentVersion.tagline;
     const tags = currentPluginInfo.tags;
+    const { carouselMedia, carouselVideos } = parseMedia(currentPluginInfo.carousel_media_urls, currentPluginInfo.carousel_videos);
 
     console.log('Preparing release...');
     const preparedRelease = await figmaHelper.prepareRelease(manifestPath, name, description, releaseNotes, tagline, tags, authNToken, category, cookie);
