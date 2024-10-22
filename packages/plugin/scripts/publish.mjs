@@ -68,22 +68,16 @@ async function main() {
 
   await createZipBundle(true);
 
-  // const releaseZip = await readFile(path.join(__dirname, '../dist/release.zip'));
-  // const localAssetStream = new Readable();
-  // localAssetStream.push(releaseZip);
-  // localAssetStream.push(null);
-  // const releaseZipSize = (await stat(path.join(__dirname, '../dist/release.zip'))).size;
+  // const uploadReleaseAssetRes = octokit.rest.repos.uploadReleaseAsset({
+  //   owner,
+  //   repo,
+  //   release_id: release.data.id,
+  //   data: await readFile(path.join(__dirname, '../dist/release.zip')),
+  //   name: 'release.zip',
+  //   upload_url: release.data.upload_url,
+  // });
 
-  const uploadReleaseAssetRes = octokit.rest.repos.uploadReleaseAsset({
-    owner,
-    repo,
-    release_id: release.data.id,
-    data: await readFile(path.join(__dirname, '../dist/release.zip')),
-    name: 'release.zip',
-    upload_url: release.data.upload_url,
-  });
-
-  console.log(uploadReleaseAssetRes);
+  // console.log(uploadReleaseAssetRes);
 
   console.log('Starting Figma publish');
   await publishRelease(changes);
