@@ -8,6 +8,7 @@ import { createZipBundle } from './bundle.mjs';
 
 // import * as fs from 'fs-extra';
 import * as url from 'url';
+import { publishRelease } from './publish-release.mjs';
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 const __filename = url.fileURLToPath(import.meta.url);
@@ -84,7 +85,8 @@ async function main() {
 
   console.log(uploadReleaseAssetRes);
 
-  console.log('Publish');
+  console.log('Starting Figma publish');
+  await publishRelease(changes);
 }
 
 main();
