@@ -57,8 +57,8 @@ async function main() {
   });
 
   const release = await octokit.rest.repos.getReleaseByTag({
-    owner: 'tokens-studio',
-    repo: 'figma-plugin',
+    owner: 'elemental-figma',
+    repo: 'json-to-figma',
     tag: `${packageJson.name}@${packageJson.version}`,
   });
 
