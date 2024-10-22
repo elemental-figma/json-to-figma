@@ -44,6 +44,7 @@ jobs:
         # if: steps.changesets.outputs.published == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FIGMA_WEB_AUTHN_TOKEN: ${{ secrets.FIGMA_WEB_AUTHN_TOKEN }}
         run: npm run release
       - name: Prepare Figma release
         if: steps.changesets.outputs.pullRequestNumber != ''
