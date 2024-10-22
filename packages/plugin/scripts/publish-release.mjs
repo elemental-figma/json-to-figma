@@ -8,7 +8,7 @@ import * as url from 'url';
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 
-const authNToken = process.env.FIGMA_WEB_AUTHN;
+const authNToken = process.env.FIGMA_WEB_AUTHN_TOKEN;
 // const figmaFile = process.env.FIGMA_TEXT_FILE;
 const manifestPath = path.join(__dirname, '../manifest.json');
 const { cookie } = await figmaHelper.getFigmaCookie();
