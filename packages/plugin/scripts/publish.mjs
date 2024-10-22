@@ -1,6 +1,7 @@
 import { readFile, writeFile, stat } from 'fs/promises';
 import path from 'path';
 import { Octokit } from '@octokit/rest';
+import { Readable } from 'node:stream';
 
 import { extractChangeset } from "./parse-changeset.mjs";
 import { createZipBundle } from './bundle.mjs';
