@@ -16,7 +16,7 @@ const { cookie } = await figmaHelper.getFigmaCookie();
 // const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
 
 export async function publishRelease(releaseNotes) {
-    const currentPluginInfo = await figmaHelper.getPluginInfo(manifestFile, authNToken)
+    const currentPluginInfo = await figmaHelper.getPluginInfo(manifestPath, authNToken)
 
     const description = currentPluginInfo.currentVersion.description;
     const name = currentPluginInfo.currentVersion.name;
