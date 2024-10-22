@@ -37,7 +37,7 @@ jobs:
         id: changesets
         with:
           version: npm run version
-          publish: npm run publish
+          publish: echo 'noop'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish Figma plugin
