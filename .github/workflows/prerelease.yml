@@ -1,0 +1,66 @@
+name: Publish to Figma store
+
+on:
+  push:
+    branches: [ "changeset-release/main" ]
+
+env:
+  FIGMA_WEB_AUTHN_TOKEN: ${{ secrets.FIGMA_WEB_AUTHN_TOKEN }}
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+permissions:
+    contents: write
+    id-token: write
+    pull-requests: write
+
+jobs:
+  release:
+    environment: PRODUCTION
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+      - name: Install dependencies
+        run: |
+          npm ci
+      - name: Build plugin
+        run: |
+          npm run build
+      - name: Store Artifact
+        id: "store_artifact"
+        uses: actions/upload-artifact@v4
+        with:
+          name: package
+          path: |
+            dist
+            manifest.json
+      - name: Find artifact comment
+        uses: peter-evans/find-comment@v3
+        id: find_artifact_comment
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: The artifact was successfully created
+      - name: Create or update artifact comment
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          comment-id: ${{ steps.find_artifact_comment.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            The artifact was successfully created! [Download it here](${{steps.store_artifact.outputs.artifact-url}})
+          edit-mode: replace
+    # - name: Store Artifact
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: package
+    #     path: dist/bundle.zip
+
+    # - name: Publish new Version to Figma
+    #   run: |
+    #     npx figcd release
