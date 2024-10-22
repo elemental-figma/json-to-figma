@@ -37,9 +37,11 @@ jobs:
         id: changesets
         with:
           version: npm run version
-          publish: npm run release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish Figma plugin
+        if: steps.changesets.outputs.published == 'true'
+        run: npm run release
       - name: Prepare Figma release
         if: steps.changesets.outputs.pullRequestNumber != ''
         run: npm run bundle
@@ -51,6 +53,7 @@ jobs:
           name: package
           path: |
             packages/plugin/dist/bundle.zip
+            packages/plugin/dist/release.zip
       - name: Find artifact comment
         uses: peter-evans/find-comment@v3
         if: steps.changesets.outputs.pullRequestNumber != ''
