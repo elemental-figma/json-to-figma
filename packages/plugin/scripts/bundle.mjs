@@ -11,7 +11,7 @@ async function readJSONFile(filePath) {
   return JSON.parse(data);
 }
 
-async function createZipBundle(isRelease) {
+export async function createZipBundle(isRelease) {
   const zip = new JSZip();
   const packageJson = await readJSONFile('../package.json');
   const manifest = await readJSONFile('../manifest.json');
