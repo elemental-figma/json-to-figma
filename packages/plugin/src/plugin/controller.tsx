@@ -37,7 +37,7 @@ figma.ui.onmessage = async (msg) => {
     }
     await loadFonts();
     try {
-      await renderJSON(data || testData);
+      await renderJSON(data.document || data || testData);
     } catch(err) {
       console.log(err)
     }

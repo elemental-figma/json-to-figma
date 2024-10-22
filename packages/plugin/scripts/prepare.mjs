@@ -78,8 +78,7 @@ interface File {
 
 async function main() {
   const packageFile = './package.json';
-  // const currentVersionNumber = (await figmaHelper.getPluginInfo('./manifest.json', process.env.FIGMA_WEB_AUTHN_TOKEN)).currentVersionNumber;
-  const currentVersionNumber = Number(JSON.parse(fs.readFileSync(packageFile, 'utf8')).figma.version);
+  const currentVersionNumber = Number((await figmaHelper.getPluginInfo('./manifest.json', process.env.FIGMA_WEB_AUTHN_TOKEN)).currentVersionNumber);
   await updatePackageVersion(packageFile, currentVersionNumber + 1)
   console.log('Minor Version in '+ packageFile + ' updated to '+ (currentVersionNumber + 1))
 
