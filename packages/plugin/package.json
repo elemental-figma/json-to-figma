@@ -8,6 +8,9 @@
   "main": "webpack.config.js",
   "scripts": {
     "release": "node scripts/publish.mjs",
+    "version:figma": "node scripts/prepare.mjs",
+    "version": "npm run version:figma && changesets version",
+    "bundle": "npm run release:prepare && npm run build",
     "publish": "changeset tag && npm run release",
     "build": "webpack --mode=production",
     "build:watch": "webpack --mode=development --watch",

@@ -35,13 +35,13 @@ jobs:
       - name: Create Release Pull Request
         uses: changesets/action@v1
         with:
+          version: npm run version
           publish: npm run release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Publish to Figma
-        if: steps.changesets.outputs.published == 'true'
-        # You can do something when a publish happens.
-        run: npm run release -- --data "${{ steps.changesets.outputs.publishedPackages }}"
+      - name: Prepare Figma release
+        if: steps.changesets.outputs.hasChangesets == 'true'
+        run: npm run bundle
       - name: Store Artifact
         id: "store_artifact"
         uses: actions/upload-artifact@v4
@@ -50,6 +50,28 @@ jobs:
           path: |
             dist
             manifest.json
+      - name: Store Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: package
+          path: dist/bundle.zip
+      - name: Find artifact comment
+        uses: peter-evans/find-comment@v3
+        id: find_artifact_comment
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: The artifact was successfully created
+      - name: Create or update artifact comment
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          comment-id: ${{ steps.find_artifact_comment.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            The artifact was successfully created! [Download it here](${{steps.store_artifact.outputs.artifact-url}})
+          edit-mode: replace
+      - name: Auto Commit Changes
+        uses: stefanzweifel/git-auto-commit-action@v5
     # - name: Store Artifact
     #   uses: actions/upload-artifact@v4
     #   with:
