@@ -1,7 +1,9 @@
 import { readFile, writeFile } from 'fs/promises';
 import path from 'path';
+import { Octokit } from '@octokit/rest';
 
 import { extractChangeset } from "./parse-changeset.mjs";
+import { createZipBundle } from './bundle.mjs';
 
 // import * as fs from 'fs-extra';
 import * as url from 'url';
@@ -49,6 +51,35 @@ async function main() {
   
 
   console.log(`Published status: ${changes}`);
+
+  const octokit = new Octokit({
+    auth: process.env.GITHUB_TOKEN,
+  });
+
+  const release = await octokit.rest.repos.getReleaseByTag({
+    owner: 'tokens-studio',
+    repo: 'figma-plugin',
+    tag: `${packageJson.name}@${packageJson.version}`,
+  });
+
+  await createZipBundle(true);
+
+  const releaseZip = await fs.readFileSync(path.join(__dirname, '../dist/release.zip'));
+
+  const uploadReleaseAssetRes = await octokit.rest.repos.uploadReleaseAsset({
+    owner,
+    repo,
+    url: release.data.upload_url,
+    release_id: release.data.id,
+    data: releaseZip,
+    headers: {
+      'content-type': contentType,
+      'content-length': fs.statSync(asset).size,
+    },
+    name: 'release.zip',
+  });
+
+  console.log(uploadReleaseAssetRes);
 
   console.log('Publish');
 }
