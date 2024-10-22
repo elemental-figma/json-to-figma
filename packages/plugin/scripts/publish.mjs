@@ -72,7 +72,7 @@ async function main() {
   const uploadReleaseAssetRes = await octokit.rest.repos.uploadReleaseAsset({
     owner,
     repo,
-    url: release.data.upload_url,
+    // url: release.data.upload_url,
     release_id: release.data.id,
     data: releaseZip,
     name: 'release.zip',
